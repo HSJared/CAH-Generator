@@ -117,6 +117,7 @@
 					<label>Expansion Icon</label>
 						<select class="form-control input-sm" name="icon" id="icon">
 							<option value="none">None</option>
+							<option value="metro">Metro</option>
 							<option value="reddit">Reddit Alien</option>
 							<option value="maple">Maple Leaf</option>
 							<option value="pax">PAX Controller</option>
@@ -288,11 +289,11 @@
 						button.button('loading');
 						$.ajax({
 							type: 'POST',
-							url: 'http://mywastedlife.com/CAH/generator.php',
+							url: '/CAH/generator.php',
 							data: form.serialize()
 						}).done(function(){
 							dl_button.click(function(){
-								window.location = 'http://mywastedlife.com/CAH/files/' + batch + '/' + batch + '.zip';
+								window.location = '/CAH/files/' + batch + '/' + batch + '.zip';
 							});
 
 							dl_button.prop('disabled', false);
@@ -330,7 +331,7 @@
 					max_attempts = 10,
 					loadImages = function(attempt){
 						var img = new Image(),
-						    imgURL = 'http://mywastedlife.com/CAH/files/' + batch + '/' + batch  + '_' + i + '.png';
+						    imgURL = '/CAH/files/' + batch + '/' + batch  + '_' + i + '.png';
 						    
 						    if ($(col).html() != $(spinner).get(0).outerHTML) {
 							col = $('<div>').attr({

@@ -9,7 +9,7 @@ $mechanic = '';
 $card_text = explode("\n", $_POST['card-text']);
 $card_count = count($card_text);
 $batch = escapeshellcmd($_POST['batch-id']);
-$path = "~/CAH/files/$batch";
+$path = "files/" .$batch;
 
 if ($_POST['card-color'] == 'black') {
 	$card_color = 'black';
@@ -17,6 +17,9 @@ if ($_POST['card-color'] == 'black') {
 }
 
 switch ($_POST['icon']) {
+	case "metro":
+		$icon = 'metro-';
+		break;
 	case "reddit":
 		$icon = 'reddit-';
 		break;
@@ -89,7 +92,7 @@ if ($batch != '' && $card_count < 31) {
 		$text = str_replace ('\\\\x\\{2019\\}', '\\x{2019}', $text);
 		$text = str_replace ('\\\\n', '\\n', $text);
 		
-		exec('perl -e \'binmode(STDOUT, ":utf8"); print "' . $text . '\n";\' | tee -a ~/CAH/card_log.txt | convert ~/CAH/img/' . $card_front . ' -page +444+444 -units PixelsPerInch -background ' . $card_color . ' -fill ' . $fill . ' -font ~/CAH/fonts/HelveticaNeueBold.ttf -pointsize 15 -kerning -1 -density 1200 -size 2450x caption:@- -flatten ' . $path . '/temp.png; mv ' . $path . '/temp.png ' . $path . '/' . $batch . '_' . $i . '.png');
+		exec('perl -e \'binmode(STDOUT, ":utf8"); print "' . $text . '\n";\' | tee -a card_log.txt | convert img/' . $card_front . ' -page +444+444 -units PixelsPerInch -background ' . $card_color . ' -fill ' . $fill . ' -font fonts/HelveticaNeueBold.ttf -pointsize 15 -kerning -1 -density 1200 -size 2450x caption:@- -flatten ' . $path . '/temp.png; mv ' . $path . '/temp.png ' . $path . '/' . $batch . '_' . $i . '.png');
 	}
 
 	exec("cd $path; zip $batch.zip *.png");
